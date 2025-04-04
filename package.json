@@ -1,6 +1,11 @@
 {
   "name": "try",
   "version": "1.0.0-beta.1",
+  "keywords": ["try", "operator", "result", "safe", "error", "proposal"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthurfiorette/try.git"
+  },
   "license": "MIT",
   "author": {
     "name": "Arthur Fiorette",
@@ -12,6 +17,7 @@
       "url": "https://finalclass.net"
     }
   ],
+  "sideEffects": false,
   "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
