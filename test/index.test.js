@@ -28,6 +28,7 @@ describe('Result', () => {
   });
 
   test('Result is iterable', () => {
+    assert.ok(Symbol.iterator in Result.prototype);
     assert.deepStrictEqual([...Result.ok(42)], [true, undefined, 42]);
     assert.deepStrictEqual([...Result.error(err)], [false, err, undefined]);
   });
@@ -44,5 +45,11 @@ describe('Result', () => {
     const result = await Result.ok(thenable);
     assert.strictEqual(result.ok, true);
     assert.deepStrictEqual(result.value, thenable);
+  });
+
+  test('Result#ok is always a boolean', () => {
+    assert.strictEqual(typeof new Result(true, null, 42).ok, 'boolean');
+    assert.strictEqual(typeof new Result(1, null, 42).ok, 'boolean');
+    assert.strictEqual(typeof new Result({ a: 1 }, null, { a: 1 }).ok, 'boolean');
   });
 });

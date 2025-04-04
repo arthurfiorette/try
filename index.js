@@ -29,22 +29,21 @@ class Result {
   static try(result, ...args) {
     // Wraps everything because `try` should never throw.
     try {
-      // try(syncFn()) would throw before try() gets executed, in those cases wrapping
-      // the actual value in a function is needed. In that case, the function must
-      // be unwrapped to get the value.
+      // If syncFn() is passed directly, it throws before try() runs.
+      // To prevent this, wrap it in a function and unwrap its result.
       if (typeof result === 'function') {
         result = result.apply(undefined, args);
       }
 
-      // Thenables must return a Promise<Result<T>>
+      // Promises must return a valid Promise<Result<T>>
       if (result instanceof Promise) {
-        return result.then(this.ok, this.error);
+        return result.then(Result.ok, Result.error);
       }
 
       // If the result is not a function or a Promise, we can be sure its a success
-      return this.ok(result);
+      return Result.ok(result);
     } catch (error) {
-      return this.error(error);
+      return Result.error(error);
     }
   }
 }
