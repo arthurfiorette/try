@@ -1,34 +1,20 @@
 /**
- * Error result type expressed as object
+ * An error result is a object that can be either destructured or accessed via iterator
  */
-type ErrorObjectResult = { ok: false; error: unknown; value: undefined };
+type ErrorResult = { ok: false; error: unknown; value: undefined } & [
+  ok: false,
+  error: unknown,
+  value: undefined
+];
 
 /**
- * Error result type expressed as tuple.
- *
- * - `error` type depends on `useUnknownInCatchVariables` tsconfig option
+ * A value result is a object that can be either destructured or accessed via iterator
  */
-type ErrorTupleResult = [ok: false, error: unknown, value: undefined];
-
-/**
- * An error result is a object that can be either destructured {@link ErrorObjectResult} or accessed by index {@link ErrorTupleResult}
- */
-type ErrorResult = ErrorObjectResult & ErrorTupleResult;
-
-/**
- * Value result type expressed as object
- */
-type ValueObjectResult<V> = { ok: true; error: undefined; value: V };
-
-/**
- * Value result type expressed as tuple
- */
-type ValueTupleResult<V> = [ok: true, error: undefined, value: V];
-
-/**
- * A value result is a object that can be either destructured {@link ValueObjectResult} or accessed by index {@link ValueTupleResult}
- */
-type ValueResult<V> = ValueObjectResult<V> & ValueTupleResult<V>;
+type ValueResult<V> = { ok: true; error: undefined; value: V } & [
+  ok: true,
+  error: undefined,
+  value: V
+];
 
 /**
  * A result is a object that can represent the result of either a failed or successful operation.
