@@ -19,11 +19,11 @@ class Result {
   }
 
   static ok(value) {
-    return new Result(true, void 0, value);
+    return new Result(true, undefined, value);
   }
 
   static error(error) {
-    return new Result(false, error, void 0);
+    return new Result(false, error);
   }
 
   static try(result, ...args) {
