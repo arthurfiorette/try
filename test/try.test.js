@@ -26,7 +26,7 @@ function syncReject() {
   return asyncReject();
 }
 
-describe('Result.try', () => {
+describe('Result.try(fn)', () => {
   test('syncOk()', () => {
     const result = Result.try(syncOk);
     assert.strictEqual(result.ok, true);
@@ -64,7 +64,7 @@ describe('Result.try', () => {
   });
 });
 
-describe('Result.try with arguments', () => {
+describe('Result.try(fn, ...args)', () => {
   function syncArgs(a = 0, b = 0) {
     return a + b;
   }
@@ -102,6 +102,21 @@ describe('Result.try with arguments', () => {
   test('asyncRejectArgs()', async () => {
     const err = new Error('123');
     const result = await Result.try(asyncRejectArgs, err);
+    assert.strictEqual(result.ok, false);
+    assert.strictEqual(result.error, err);
+  });
+});
+
+describe('Result.try(Promise)', () => {
+  test('Promise.resolve()', async () => {
+    const result = await Result.try(Promise.resolve(42));
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(result.value, 42);
+  });
+
+  test('Promise.reject()', async () => {
+    const err = new Error('Test error');
+    const result = await Result.try(Promise.reject(err));
     assert.strictEqual(result.ok, false);
     assert.strictEqual(result.error, err);
   });

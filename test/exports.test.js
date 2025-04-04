@@ -2,7 +2,7 @@ const { Result, ok, error, t } = require('../index.js');
 const { test, describe } = require('node:test');
 const assert = require('node:assert');
 
-describe('exports', () => {
+describe('export {}', () => {
   test('Result.ok === ok', () => {
     assert.strictEqual(Result.ok, ok);
   });
