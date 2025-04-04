@@ -1,0 +1,38 @@
+{
+  "name": "try",
+  "version": "1.0.0-beta.1",
+  "license": "MIT",
+  "author": {
+    "name": "Arthur Fiorette",
+    "url": "https://arthur.place"
+  },
+  "contributors": [
+    {
+      "name": "Szymon Wygnański",
+      "url": "https://finalclass.net"
+    }
+  ],
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "format": "biome format --write .",
+    "lint": "biome check .",
+    "lint-ci": "biome ci .",
+    "lint-fix": "biome check --write --unsafe .",
+    "test-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@arthurfiorette/biomejs-config": "^1.0.7",
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.14.0",
+    "husky": "^9.1.7",
+    "typescript": "^5.8.2"
+  },
+  "packageManager": "pnpm@10.6.4"
+}
