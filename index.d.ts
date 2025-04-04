@@ -1,34 +1,34 @@
 /**
  * Error result type expressed as object
  */
-export type ErrorObjectResult = { ok: false; error: unknown; value: undefined };
+type ErrorObjectResult = { ok: false; error: unknown; value: undefined };
 
 /**
  * Error result type expressed as tuple.
  *
  * - `error` type depends on `useUnknownInCatchVariables` tsconfig option
  */
-export type ErrorTupleResult = [ok: false, error: unknown, value: undefined];
+type ErrorTupleResult = [ok: false, error: unknown, value: undefined];
 
 /**
  * An error result is a object that can be either destructured {@link ErrorObjectResult} or accessed by index {@link ErrorTupleResult}
  */
-export type ErrorResult = ErrorObjectResult & ErrorTupleResult;
+type ErrorResult = ErrorObjectResult & ErrorTupleResult;
 
 /**
  * Value result type expressed as object
  */
-export type ValueObjectResult<V> = { ok: true; error: undefined; value: V };
+type ValueObjectResult<V> = { ok: true; error: undefined; value: V };
 
 /**
  * Value result type expressed as tuple
  */
-export type ValueTupleResult<V> = [ok: true, error: undefined, value: V];
+type ValueTupleResult<V> = [ok: true, error: undefined, value: V];
 
 /**
  * A value result is a object that can be either destructured {@link ValueObjectResult} or accessed by index {@link ValueTupleResult}
  */
-export type ValueResult<V> = ValueObjectResult<V> & ValueTupleResult<V>;
+type ValueResult<V> = ValueObjectResult<V> & ValueTupleResult<V>;
 
 /**
  * A result is a object that can represent the result of either a failed or successful operation.
