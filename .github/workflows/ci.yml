@@ -1,0 +1,35 @@
+name: Code CI
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Test code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node and restore cached dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint-ci
+
+      - name: Typecheck
+        run: pnpm test-types
+
+      - name: Test
+        run: pnpm test

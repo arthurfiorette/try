@@ -25,6 +25,7 @@
     "lint": "biome check .",
     "lint-ci": "biome ci .",
     "lint-fix": "biome check --write --unsafe .",
+    "test": "node --test test/**/*.js",
     "test-types": "tsc --noEmit"
   },
   "devDependencies": {
