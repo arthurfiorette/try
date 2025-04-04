@@ -1,0 +1,47 @@
+name: Publish to NPM
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node and restore cached dependencies
+        uses: actions/setup-node@v4
+        with:
+          cache: 'pnpm'
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint-ci
+
+      - name: Typecheck
+        run: pnpm test-types
+
+      - name: Test
+        run: pnpm test
+
+      - name: Publish to NPM
+        run: pnpm publish --access public --no-git-checks --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
