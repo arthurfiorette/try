@@ -1,1 +1,1 @@
-# try
+[![codecov](https://codecov.io/gh/arthurfiorette/try/graph/badge.svg?token=ky185JbytA)](https://codecov.io/gh/arthurfiorette/try)

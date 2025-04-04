@@ -22,7 +22,7 @@
     "lint-ci": "biome ci .",
     "lint-fix": "biome check --write --unsafe .",
     "prepare": "husky",
-    "test": "c8 node --test test/**/*.js",
+    "test": "c8 --reporter lcov node --test test/**/*.js",
     "test-types": "tsc --noEmit",
     "test-watch": "node --watch --test test/**/*.js"
   },
