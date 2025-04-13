@@ -9,7 +9,7 @@
 <br />
 
 <p align="center">
-    <img src="assets/logo.svg" width="256" alt="Try safety vest logo" />
+    <img src="assets/logo.png" width="256" alt="Try safety vest logo" />
 </p>
 
 <br />
