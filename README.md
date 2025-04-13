@@ -32,6 +32,7 @@
 > A [336-byte](https://bundlephobia.com/package/try) spec-compliant implementation of the [`Result` class from the ECMAScript Try Operator proposal](https://github.com/arthurfiorette/proposal-try-operator).
 
 ```ts
+import { t } from 'try';
 const [ok, error, value] = t(JSON.parse, '{"foo": "bar"}');
 const [ok, error, value] = await t(axios.get('https://arthur.place')); // works with promises too!
 ```
@@ -188,11 +189,11 @@ The return value of `t()` is automatically `await`-able if the function returns 
 
 ## No `Result.bind`
 
-This implementation **will never provide a `Result.bind()`** (like `util.promisify`) because the Try Operator follows the **Caller’s Responsibility** model.
+This implementation **will never provide a `Result.bind()`** (like `util.promisify`) because the Try Operator follows the [Caller’s Approach](https://github.com/arthurfiorette/proposal-try-operator/tree/main#callers-approach) model.
 
 That means **error handling belongs to the calling context**, not the function itself. Wrapping a function with `bind()` would push error encapsulation into the callee, breaking that principle.
 
-> In short: the caller chooses to wrap a function in `Result.try`, not the function author.
+**In short:** the caller chooses to wrap a function call in `Result.try`, not the function author.
 
 <br />
 
