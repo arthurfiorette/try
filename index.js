@@ -1,7 +1,12 @@
+/** @template V */
 class Result {
-  // compiler hint
   ok = true;
 
+  /**
+   * @param {boolean} ok
+   * @param {unknown} [error]
+   * @param {V} [value]
+   */
   constructor(ok, error, value) {
     this.ok = !!ok;
 
@@ -18,29 +23,35 @@ class Result {
     yield this.value;
   }
 
+  /**
+   * @template T
+   * @param {T} value
+   */
   static ok(value) {
     return new Result(true, undefined, value);
   }
 
+  /** @param {unknown} error */
   static error(error) {
     return new Result(false, error);
   }
 
+  /**
+   * @template T
+   * @param {any} result
+   * @param {...any} args
+   * @returns {Promise<Result<T>> | Result<T>}
+   */
   static try(result, ...args) {
-    // Wraps everything because `try` should never throw.
     try {
-      // If syncFn() is passed directly, it throws before try() runs.
-      // To prevent this, wrap it in a function and unwrap its result.
       if (typeof result === 'function') {
         result = result.apply(undefined, args);
       }
 
-      // Promises must return a valid Promise<Result<T>>
       if (result instanceof Promise) {
         return result.then(Result.ok, Result.error);
       }
 
-      // If the result is not a function or a Promise, we can be sure its a success
       return Result.ok(result);
     } catch (error) {
       return Result.error(error);
