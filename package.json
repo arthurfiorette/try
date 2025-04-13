@@ -1,6 +1,6 @@
 {
   "name": "try",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "keywords": ["try", "operator", "result", "safe", "error", "proposal"],
   "repository": {
     "type": "git",
