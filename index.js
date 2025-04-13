@@ -1,3 +1,5 @@
+/// <reference path="./index.d.ts" />
+
 /** @template V */
 class Result {
   /**
