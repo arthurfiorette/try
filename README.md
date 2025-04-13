@@ -173,8 +173,7 @@ You can pass a `Promise` directly and get a `Result`-wrapped version:
 
 ```ts
 const [ok, error, value] = await t(
-  fs.promises.readFile,
-  './config.json'
+  fs.promises.readFile('./config.json')
 );
 
 if (ok) {
