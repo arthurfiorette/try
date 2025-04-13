@@ -21,7 +21,6 @@
   "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
-  "files": ["index.js", "index.d.ts", "README.md"],
   "scripts": {
     "format": "biome format --write .",
     "lint": "biome check .",

@@ -1,0 +1,6 @@
+# whitelist approach
+
+*
+
+!index.js
+!index.d.ts
