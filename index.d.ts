@@ -41,13 +41,21 @@ export type Result<V> = ErrorResult | ValueResult<V>;
 
 interface ResultConstructor {
   /**
-   * Creates a `Result` from a tuple-like structure.
+   * Creates a successful `Result` with a value.
    *
    * @example
    * new Result(true, undefined, 42);
    * new Result(false, new Error('Something went wrong'));
    */
-  new <V>(...args: ValueTupleResult<V> | ErrorTupleResult): Result<V>;
+  new <V>(ok: true, error: undefined | null, value: V): ValueResult<V>;
+
+  /**
+   * Creates a failed `Result` with an error.
+   *
+   * @example
+   * new Result(false, new Error('Something went wrong'));
+   */
+  new (ok: false, error: unknown, value?: undefined | null): ErrorResult;
 
   /**
    * Creates a successful `Result`.
@@ -55,7 +63,7 @@ interface ResultConstructor {
    * @param value The value to wrap.
    * @returns A `Result` with `ok: true`.
    */
-  ok<V>(this: void, value: V): Result<V>;
+  ok<V>(this: void, value: V): ValueResult<V>;
 
   /**
    * Creates a failed `Result`.
@@ -63,7 +71,7 @@ interface ResultConstructor {
    * @param error The error to wrap.
    * @returns A `Result` with `ok: false`.
    */
-  error<V>(this: void, error: unknown): Result<V>;
+  error(this: void, error: unknown): ErrorResult;
 
   /**
    * Wraps a promise in a `Result`. The returned promise never rejects.
@@ -84,8 +92,11 @@ interface ResultConstructor {
    * If the function throws, the error is captured as a failed `Result`.
    *
    * @example
-   * const [ok, error, value] = Result.try(syncFunction, arg1, arg2);
-   * const [ok, error, value] = await Result.try(asyncFunction, arg1, arg2);
+   * const [ok, error, value] = Result.try(syncFn, arg1, arg2);
+   * const [ok, error, value] = await Result.try(asyncFn, arg1, arg2);
+   *
+   * const [ok, error, value] = Result.try(() => syncFn(arg1, arg2));
+   * const [ok, error, value] = await Result.try(async () => await asyncFn(arg1, arg2));
    *
    * @param fn The function to execute.
    * @param args Arguments to pass to the function.
@@ -124,8 +135,13 @@ export declare const error: ResultConstructor['error'];
  * This overload supports both function and promise-based usage.
  *
  * @example
- * const [ok, error, value] = Result.try(syncFunction, arg1, arg2);
- * const [ok, error, value] = await Result.try(asyncFunction, arg1, arg2);
+ * const [ok, error, value] = Result.try(syncFn, arg1, arg2);
+ * const [ok, error, value] = await Result.try(asyncFn, arg1, arg2);
+ *
+ * const [ok, error, value] = Result.try(() => syncFn(arg1, arg2));
+ * const [ok, error, value] = await Result.try(async () => await asyncFn(arg1, arg2));
+ *
  * const [ok, error, value] = await Result.try(Promise.resolve('pass'));
+ * const [ok, error, value] = await Result.try(Promise.reject('fail'));
  */
 export declare const t: ResultConstructor['try'];

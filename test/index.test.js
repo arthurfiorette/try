@@ -49,7 +49,12 @@ describe('Result', () => {
 
   test('typeof Result#ok', () => {
     assert.strictEqual(typeof new Result(true, null, 42).ok, 'boolean');
+    assert.strictEqual(typeof new Result(false, 42).ok, 'boolean');
+    //@ts-expect-error
+    assert.strictEqual(typeof new Result('', 42).ok, 'boolean');
+    //@ts-expect-error
     assert.strictEqual(typeof new Result(1, null, 42).ok, 'boolean');
+    //@ts-expect-error
     assert.strictEqual(typeof new Result({ a: 1 }, null, { a: 1 }).ok, 'boolean');
   });
 });

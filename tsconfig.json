@@ -1,43 +1,13 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "composite": true,
-    "target": "ES2016",
-
-    "module": "CommonJS",
     "allowJs": true,
     "checkJs": true,
-
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noEmit": true,
-
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "erasableSyntaxOnly": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "strictBuiltinIteratorReturn": true,
-    "noImplicitThis": true,
-    "useUnknownInCatchVariables": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-
     "skipDefaultLibCheck": true,
-    "skipLibCheck": true
+    "skipLibCheck": false,
+    "strict": true
   },
   "include": ["index.d.ts", "test/**/*.test.js"]
 }
