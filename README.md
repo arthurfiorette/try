@@ -28,3 +28,5 @@
 <br />
 
 # TRY
+
+> Spec-Compliant Implementation of the [ECMAScript Try Operator Proposal](https://github.com/arthurfiorette/proposal-try-operator)
