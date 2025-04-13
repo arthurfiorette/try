@@ -33,6 +33,7 @@
 
 ```ts
 import { t } from 'try';
+
 const [ok, error, value] = t(JSON.parse, '{"foo": "bar"}');
 const [ok, error, value] = await t(axios.get('https://arthur.place')); // works with promises too!
 ```
