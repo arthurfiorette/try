@@ -29,7 +29,7 @@
 
 <h1>TRY</h1>
 
-> A [336-byte](https://bundlephobia.com/package/try) spec-compliant implementation of the [`Result` class from the ECMAScript Try Operator proposal](https://github.com/arthurfiorette/proposal-try-operator).
+> A [332-byte](https://bundlephobia.com/package/try) spec-compliant implementation of the [`Result` class from the ECMAScript Try Operator proposal](https://github.com/arthurfiorette/proposal-try-operator).
 
 ```ts
 import { t } from 'try';
