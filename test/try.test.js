@@ -120,4 +120,18 @@ describe('Result.try(Promise)', () => {
     assert.strictEqual(result.ok, false);
     assert.strictEqual(result.error, err);
   });
+
+  test('Promise.resolve(Function)', async () => {
+    const result = await Result.try(Promise.resolve(() => {}));
+
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(typeof result.value, 'function');
+  });
+
+  test('Promise.reject(Function)', async () => {
+    const result = await Result.try(Promise.reject(() => {}));
+
+    assert.strictEqual(result.ok, false);
+    assert.strictEqual(typeof result.error, 'function');
+  });
 });

@@ -53,7 +53,7 @@ If you'd like to suggest changes or improvements to the behavior or API, please 
 - [Why This Exists](#why-this-exists)
 - [Usage](#usage)
   - [Wrapping a Function Call](#wrapping-a-function-call)
-  - [Prefer the `t()` Alias](#prefer-the-t-alias)
+  - [`t()` alias](#t-alias)
   - [Prefer Using the Result Object in Multi-Try Scenarios](#prefer-using-the-result-object-in-multi-try-scenarios)
 - [Works With Promises Too!](#works-with-promises-too)
 - [No `Result.bind`](#no-resultbind)
@@ -107,7 +107,7 @@ if (ok) {
 
 <br />
 
-### Prefer the `t()` Alias
+### `t()` alias
 
 To make code cleaner and more ergonomic while we wait for language-level syntax sugar, this package also exports `t`, a shortcut for `Result.try`.
 
