@@ -35,10 +35,10 @@
 import { t } from 'try';
 
 const [ok, error, value] = t(JSON.parse, '{"foo": "bar"}');
-const [ok, error, value] = await t(axios.get('https://arthur.place')); // works with promises too!
+const [ok, error, value] = await t(axios.get('https://arthur.place'));
 ```
 
-This package is a minimal and precise reference implementation of the `Result` class as described in the Try Operator proposal for JavaScript.
+This package is a minimal and precise reference implementation of the [`Result` class](https://github.com/arthurfiorette/proposal-try-operator#result-class) as described in the [Try Operator](https://github.com/arthurfiorette/proposal-try-operator) proposal for JavaScript.
 
 It aims to provide a lightweight and fast runtime utility that reflects exactly how the proposed `try` operator would behave — and **will not evolve independently of the proposal**.
 
