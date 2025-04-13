@@ -2,7 +2,7 @@
   "name": "try",
   "version": "1.0.0-beta.2",
   "keywords": ["try", "operator", "result", "safe", "error", "proposal"],
-  "description": "Spec-Compliant Implementation of the ECMAScript Try Operator Proposal",
+  "description": "A 336-byte Spec-Compliant Implementation of the ECMAScript Try Operator Proposal Result class",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arthurfiorette/try.git"

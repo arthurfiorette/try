@@ -29,4 +29,4 @@
 
 # TRY
 
-> A [336-byte](https://bundlephobia.com/package/try) Spec-Compliant Implementation of the [ECMAScript Try Operator Proposal](https://github.com/arthurfiorette/proposal-try-operator)
+> A [336-byte](https://bundlephobia.com/package/try) Spec-Compliant Implementation of the [ECMAScript Try Operator Proposal](https://github.com/arthurfiorette/proposal-try-operator) `Result` class.
