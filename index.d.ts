@@ -1,67 +1,95 @@
 /**
- * An error result is a object that can be either destructured or accessed via iterator
+ * Represents a failed result.
+ *
+ * This object can be destructured like a tuple: `[ok, error, value]`,
+ * or accessed via named properties: (`ok`, `error`, `value`).
+ *
+ * @see {@linkcode Result}
+ * @see {@linkcode ValueResult}
  */
-type ErrorResult = { ok: false; error: unknown; value: undefined } & [
-  ok: false,
-  error: unknown,
-  value: undefined
-];
+type ErrorResult = {
+  ok: false;
+  error: unknown;
+  value: undefined;
+} & [ok: false, error: unknown, value: undefined];
 
 /**
- * A value result is a object that can be either destructured or accessed via iterator
+ * Represents a successful result.
+ *
+ * This object can be destructured like a tuple: `[ok, error, value]`,
+ * or accessed via named properties: (`ok`, `error`, `value`).
+ *
+ * @see {@linkcode Result}
+ * @see {@linkcode ErrorResult}
  */
-type ValueResult<V> = { ok: true; error: undefined; value: V } & [
-  ok: true,
-  error: undefined,
-  value: V
-];
+type ValueResult<V> = {
+  ok: true;
+  error: undefined;
+  value: V;
+} & [ok: true, error: undefined, value: V];
 
 /**
- * A result is a object that can represent the result of either a failed or successful operation.
+ * A `Result` represents the outcome of an operation,
+ * encapsulating either a success (`ok: true`) or a failure (`ok: false`).
+ *
+ * **Even though it type has array-like properties, it is not an array and
+ * those properties does not exists at runtime.**
+ *
+ * It can be used as both a named object and a destructurable tuple.
  */
 export type Result<V> = ErrorResult | ValueResult<V>;
 
 interface ResultConstructor {
   /**
-   * Creates a result from a tuple
+   * Creates a `Result` from a tuple-like structure.
    *
    * @example
-   *
-   * new Result(true, undefined, 42)
-   * new Result(false, new Error('Something went wrong'))
+   * new Result(true, undefined, 42);
+   * new Result(false, new Error('Something went wrong'));
    */
   new <V>(...args: ValueTupleResult<V> | ErrorTupleResult): Result<V>;
 
   /**
-   * Creates a result for a successful operation
+   * Creates a successful `Result`.
+   *
+   * @param value The value to wrap.
+   * @returns A `Result` with `ok: true`.
    */
   ok<V>(this: void, value: V): Result<V>;
 
   /**
-   * Creates a result for a failed operation
+   * Creates a failed `Result`.
+   *
+   * @param error The error to wrap.
+   * @returns A `Result` with `ok: false`.
    */
   error<V>(this: void, error: unknown): Result<V>;
 
   /**
-   * Wraps a promise into a {@linkcode Result}.
-   *
-   * The resulting promise never rejects.
+   * Wraps a promise in a `Result`. The returned promise never rejects.
    *
    * @example
+   * const [ok, error, value] = await Result.try(Promise.resolve('pass'));
+   * const [ok, error, value] = await Result.try(Promise.reject('fail'));
    *
-   * const [ok, error, value] = await Result.try(Promise.resolve('pass'))
-   * const [ok, error, value] = await Result.try(new Promise((rej) => rej('hello')))
+   * @param promise A promise to wrap.
+   * @returns A promise that resolves to a `Result`.
    */
   try<P extends Promise<R>, R>(this: void, promise: P): Promise<Result<R>>;
 
   /**
-   * Runs a function and wraps the result into a {@linkcode Result}.
+   * Executes a function and wraps its return value in a `Result`.
+   *
+   * If the function returns a promise, the result is awaited and wrapped.
+   * If the function throws, the error is captured as a failed `Result`.
    *
    * @example
+   * const [ok, error, value] = Result.try(syncFunction, arg1, arg2);
+   * const [ok, error, value] = await Result.try(asyncFunction, arg1, arg2);
    *
-   * const [ok, error, value] = Result.try(func, arg1, arg2)
-   * const [ok, error, value] = await Result.try(asyncFunc, arg1, arg2)
-   * const [ok, error, value] = await Result.try(async (arg) => arg, 'pass')
+   * @param fn The function to execute.
+   * @param args Arguments to pass to the function.
+   * @returns A `Result` or a `Promise<Result>`, depending on the function type.
    */
   try<F extends (this: void, ...args: A) => R, A extends any[], R>(
     this: void,
@@ -76,30 +104,28 @@ interface ResultConstructor {
 }
 
 /**
- * A result is a object that can represent the result of either a failed or successful operation.
+ * The main `Result` namespace for constructing and handling operation results.
  */
 export declare const Result: ResultConstructor;
 
 /**
- * Creates a result for a successful operation
+ * Shorthand for {@linkcode Result.ok}.
  */
 export declare const ok: ResultConstructor['ok'];
 
 /**
- * Creates a result for a failed operation
+ * Shorthand for {@linkcode Result.error}.
  */
 export declare const error: ResultConstructor['error'];
 
 /**
- * Runs a function and wraps the result into a {@linkcode Result} or wraps a promise into a {@linkcode Result}.
+ * Shorthand for {@linkcode Result.try}.
+ *
+ * This overload supports both function and promise-based usage.
  *
  * @example
- *
- * const [ok, error, value] = Result.try(func, arg1, arg2)
- * const [ok, error, value] = await Result.try(asyncFunc, arg1, arg2)
- * const [ok, error, value] = await Result.try(async (arg) => arg, 'pass')
- *
- * const [ok, error, value] = await Result.try(Promise.resolve('pass'))
- * const [ok, error, value] = await Result.try(new Promise((rej) => rej('hello')))
+ * const [ok, error, value] = Result.try(syncFunction, arg1, arg2);
+ * const [ok, error, value] = await Result.try(asyncFunction, arg1, arg2);
+ * const [ok, error, value] = await Result.try(Promise.resolve('pass'));
  */
 export declare const t: ResultConstructor['try'];
