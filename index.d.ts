@@ -67,7 +67,12 @@ interface ResultConstructor {
     this: void,
     fn: F,
     ...args: Parameters<F>
-  ): ReturnType<F> extends Promise<infer R> ? Promise<Result<R>> : Result<ReturnType<F>>;
+    // IsAny<ReturnType<F>>
+  ): 0 extends 1 & ReturnType<F>
+    ? Result<any>
+    : ReturnType<F> extends Promise<infer U>
+      ? Promise<Result<U>>
+      : Result<ReturnType<F>>;
 }
 
 /**
