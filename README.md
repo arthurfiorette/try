@@ -1,5 +1,5 @@
 <p align="center">
-   <b>Using this package?</b> Please consider <a href="https://github.com/arthurfiorette/try?sponsor=1" target="_blank">donating</a> to support the project ❤️
+   <b>Using this package?</b> Please consider <a href="https://github.com/arthurfiorette/try?sponsor=1" target="_blank">donating</a> to support the proposal ❤️
   <br />
   <sup>
    Help <code>try</code> grow! Star and share this amazing repository with your friends and co-workers!
@@ -29,4 +29,4 @@
 
 # TRY
 
-> Spec-Compliant Implementation of the [ECMAScript Try Operator Proposal](https://github.com/arthurfiorette/proposal-try-operator)
+> A [336-byte](https://bundlephobia.com/package/try) Spec-Compliant Implementation of the [ECMAScript Try Operator Proposal](https://github.com/arthurfiorette/proposal-try-operator)
