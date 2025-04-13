@@ -1,7 +1,5 @@
 /** @template V */
 class Result {
-  ok = true;
-
   /**
    * @param {boolean} ok
    * @param {unknown} [error]
