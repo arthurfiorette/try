@@ -116,11 +116,14 @@ import { Result, t } from 'try';
 import { readFile } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 
-// Examples
+// Example (this is void)
 const [ok, error, value] = t(readFileSync, './config.json');
+// If `this` matters in your context
 const [ok, error, value] = t(() => decoder.decode(request.body));
+// Promises don't need wrapping
 const [ok, error, value] = await t(axios.get('http://example.com'));
-const [ok, error, value] = await t(readFile(path));
+// Safer way even for promises (catches sync errors before returning a promise)
+const [ok, error, value] = await t(readFile, path);
 ```
 
 The `t(fn, ...args)` form is ideal: it automatically passes arguments to your function, preserves full TypeScript inference, and keeps code short and readable.
