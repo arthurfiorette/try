@@ -7,7 +7,7 @@ import {
   type ValueResult,
   ok,
   t
-} from '../../lib';
+} from '../lib';
 
 // Same function
 expectAssignable<ResultConstructor['try']>(t);

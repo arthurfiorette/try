@@ -29,9 +29,9 @@
     "lint-ci": "biome ci .",
     "lint-fix": "biome check --write --unsafe .",
     "prepare": "husky",
-    "test": "c8 --reporter lcov node --test test/**/*.js",
-    "test-types": "tsd --show-diff -f test/types",
-    "test-watch": "node --watch --test test/**/*.js"
+    "test": "c8 --reporter lcov node --test test",
+    "test-types": "tsd --show-diff -f test",
+    "test-watch": "node --watch --test test"
   },
   "devDependencies": {
     "@arthurfiorette/biomejs-config": "^1.0.8",

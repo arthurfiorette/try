@@ -1,5 +1,5 @@
 import { expectError, expectNotType, expectType } from 'tsd';
-import { type ErrorResult, Result, type ValueResult } from '../../lib';
+import { type ErrorResult, Result, type ValueResult } from '../lib';
 
 // Always error types
 expectType<ErrorResult>(new Result(false, new Error('str')));
