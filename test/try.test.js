@@ -26,6 +26,22 @@ function syncReject() {
   return asyncReject();
 }
 
+function syncArgs(a = 0, b = 0) {
+  return a + b;
+}
+
+function syncErrArgs(e = '', r = '', r2 = '') {
+  throw e + r + r2;
+}
+
+async function asyncResolveArgs(a = '', b = '') {
+  return a + b;
+}
+
+async function asyncRejectArgs(err = new Error('reject')) {
+  throw err;
+}
+
 describe('Result.try(fn)', () => {
   test('syncOk()', () => {
     const result = Result.try(syncOk);
@@ -65,22 +81,6 @@ describe('Result.try(fn)', () => {
 });
 
 describe('Result.try(fn, ...args)', () => {
-  function syncArgs(a = 0, b = 0) {
-    return a + b;
-  }
-
-  function syncErrArgs(e = '', r = '', r2 = '') {
-    throw e + r + r2;
-  }
-
-  async function asyncResolveArgs(a = '', b = '') {
-    return a + b;
-  }
-
-  async function asyncRejectArgs(err = new Error('reject')) {
-    throw err;
-  }
-
   test('syncArgs(1, 2)', () => {
     const result = Result.try(syncArgs, 1, 2);
     assert.strictEqual(result.ok, true);

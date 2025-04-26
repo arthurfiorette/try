@@ -9,5 +9,5 @@
     "skipLibCheck": false,
     "strict": true
   },
-  "include": ["lib/index.d.ts", "lib/index.js", "test/**/*.test.js"]
+  "include": ["lib", "test"]
 }
