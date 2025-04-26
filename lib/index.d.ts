@@ -92,7 +92,7 @@ interface ResultConstructor {
    * @param promise A promise to wrap.
    * @returns A promise that resolves to a `Result`.
    */
-  try<P extends Promise<R>, R>(this: void, promise: P): Promise<Result<R>>;
+  try<P extends Promise<unknown>>(this: void, promise: P): Promise<Result<Awaited<P>>>;
 
   /**
    * Executes a function and wraps its return value in a `Result`.
@@ -114,16 +114,39 @@ interface ResultConstructor {
    * @param args Arguments to pass to the function.
    * @returns A `Result` or a `Promise<Result>`, depending on the function type.
    */
-  try<F extends (this: void, ...args: A) => R, A extends any[], R>(
+  try<const F extends (...args: any) => any>(
     this: void,
     fn: F,
     ...args: Parameters<F>
-    // IsAny<ReturnType<F>>
   ): 0 extends 1 & ReturnType<F>
-    ? Result<any>
-    : ReturnType<F> extends Promise<infer U>
-      ? Promise<Result<U>>
-      : Result<ReturnType<F>>;
+    ? // Avoid any return type to create Promise<Result> | Result
+      Result<any>
+    : // checks for never
+      ReturnType<F> extends never
+      ? ErrorResult
+      : // promise never
+        ReturnType<F> extends PromiseLike<never>
+        ? Promise<ErrorResult>
+        : // Unwraps any promise-like return type
+          ReturnType<F> extends PromiseLike<infer U>
+          ? Promise<Result<Awaited<U>>>
+          : // normal return type
+            Result<ReturnType<F>>;
+
+  /**
+   * An alias for {@linkcode Result.ok}.
+   *
+   * @example
+   *
+   * ```ts
+   * const [ok, error, value] = await Result.try(myObject);
+   * const [ok, error, value] = await Result.try(myArray);
+   * ```
+   *
+   * @param value The value to wrap.
+   * @returns A `Result` with `ok: true`.
+   */
+  try<V>(this: void, value: V): ValueResult<V>;
 }
 
 /** The main `Result` namespace for constructing and handling operation results. */

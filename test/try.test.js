@@ -135,3 +135,35 @@ describe('Result.try(Promise)', () => {
     assert.strictEqual(typeof result.error, 'function');
   });
 });
+
+describe('Result.try(Literal)', () => {
+  test('String', () => {
+    const result = Result.try('ok');
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(result.value, 'ok');
+  });
+
+  test('Number', () => {
+    const result = Result.try(42);
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(result.value, 42);
+  });
+
+  test('Boolean', () => {
+    const result = Result.try(true);
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(result.value, true);
+  });
+
+  test('Object', () => {
+    const result = Result.try({ ok: true });
+    assert.strictEqual(result.ok, true);
+    assert.deepStrictEqual(result.value, { ok: true });
+  });
+
+  test('Array', () => {
+    const result = Result.try([1, 2, 3]);
+    assert.strictEqual(result.ok, true);
+    assert.deepStrictEqual(result.value, [1, 2, 3]);
+  });
+});
