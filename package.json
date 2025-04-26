@@ -21,8 +21,8 @@
   ],
   "sideEffects": false,
   "type": "commonjs",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "format": "biome format --write .",
     "lint": "biome check .",
@@ -41,5 +41,9 @@
     "husky": "^9.1.7",
     "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@10.6.4"
+  "packageManager": "pnpm@10.6.4",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }

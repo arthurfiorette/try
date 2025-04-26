@@ -2,5 +2,5 @@
 
 *
 
-!index.js
-!index.d.ts
+!lib/index.js
+!lib/index.d.ts

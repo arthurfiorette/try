@@ -1,4 +1,4 @@
-const { Result, ok, error, t } = require('../index.js');
+const { Result, ok, error, t } = require('../lib/index.js');
 const { test, describe } = require('node:test');
 const assert = require('node:assert');
 
@@ -21,7 +21,7 @@ describe('export {}', () => {
   });
 
   test('only 4 exports', () => {
-    const keys = Object.keys(require('../index.js'));
+    const keys = Object.keys(require('../lib/index.js'));
     assert.strictEqual(keys.length, 4);
     assert.deepStrictEqual(keys.sort(), ['Result', 'error', 'ok', 't']);
   });

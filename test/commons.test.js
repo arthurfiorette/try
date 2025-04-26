@@ -1,4 +1,4 @@
-const { Result } = require('../index.js');
+const { Result } = require('../lib/index.js');
 const { test, describe } = require('node:test');
 const assert = require('node:assert');
 const fs = require('node:fs');
