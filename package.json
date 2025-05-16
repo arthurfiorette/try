@@ -45,6 +45,7 @@
   "packageManager": "pnpm@10.9.0",
   "publishConfig": {
     "access": "public",
-    "provenance": true
+    "provenance": true,
+    "tag": "latest"
   }
 }
