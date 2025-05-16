@@ -116,12 +116,12 @@ t(Promise.resolve('chain')).then((res) => {
 expectType<Result<{ then(): boolean }>>(
   t(() => ({
     // biome-ignore lint/suspicious/noThenProperty: This is a test
-    then() {
+    then(): boolean {
       return true;
     }
   }))
 );
-expectType<Result<{ then(): boolean }>>(
+expectType<Result<{ then(): never }>>(
   t(() => ({
     // biome-ignore lint/suspicious/noThenProperty: This is a test
     then() {
