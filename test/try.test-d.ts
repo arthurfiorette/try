@@ -1,13 +1,12 @@
 import fs from 'node:fs';
-import { expectAssignable, expectNotType, expectType } from 'tsd';
+import { expectAssignable, expectType } from 'tsd';
 import {
   type ErrorResult,
   type Result,
   type ResultConstructor,
   type ValueResult,
-  ok,
   t
-} from '../lib';
+} from '../lib/index.js';
 
 // Same function
 expectAssignable<ResultConstructor['try']>(t);

@@ -1,7 +1,7 @@
-const { Result } = require('../lib/index.js');
-const { test, describe } = require('node:test');
-const assert = require('node:assert');
-const fs = require('node:fs');
+import assert from 'node:assert';
+import fs from 'node:fs';
+import { describe, test } from 'node:test';
+import { Result } from '../lib/index.js';
 
 describe('Usage', () => {
   test('JSON.parse', () => {

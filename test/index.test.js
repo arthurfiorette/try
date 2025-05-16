@@ -1,6 +1,6 @@
-const { Result } = require('../lib/index.js');
-const { test, describe } = require('node:test');
-const assert = require('node:assert');
+import assert from 'node:assert';
+import { describe, test } from 'node:test';
+import { Result } from '../lib/index.js';
 
 const err = new Error('Test error');
 

@@ -1,5 +1,5 @@
 import { expectAssignable, expectType } from 'tsd';
-import { type ErrorResult, Result, type ResultConstructor, error } from '../lib';
+import { type ErrorResult, type ResultConstructor, error } from '../lib/index.js';
 
 // Same function
 expectAssignable<ResultConstructor['error']>(error);

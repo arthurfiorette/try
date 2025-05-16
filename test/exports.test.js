@@ -1,6 +1,6 @@
-const { Result, ok, error, t } = require('../lib/index.js');
-const { test, describe } = require('node:test');
-const assert = require('node:assert');
+import assert from 'node:assert';
+import { describe, test } from 'node:test';
+import { Result, error, ok, t } from '../lib/index.js';
 
 describe('export {}', () => {
   test('Result.ok === ok', () => {
@@ -20,8 +20,8 @@ describe('export {}', () => {
     assert.strictEqual(Result.prototype.constructor, Result);
   });
 
-  test('only 4 exports', () => {
-    const keys = Object.keys(require('../lib/index.js'));
+  test('only 4 exports', async () => {
+    const keys = Object.keys(await import('../lib/index.js'));
     assert.strictEqual(keys.length, 4);
     assert.deepStrictEqual(keys.sort(), ['Result', 'error', 'ok', 't']);
   });
