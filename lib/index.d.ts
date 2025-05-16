@@ -114,7 +114,7 @@ interface ResultConstructor {
    * @param args Arguments to pass to the function.
    * @returns A `Result` or a `Promise<Result>`, depending on the function type.
    */
-  try<const F extends (...args: any) => any>(
+  try<const F extends (this: void, ...args: any) => any>(
     this: void,
     fn: F,
     ...args: Parameters<F>

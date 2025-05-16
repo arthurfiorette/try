@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { expectAssignable, expectType } from 'tsd';
+import { expectAssignable, expectError, expectType } from 'tsd';
 import {
   type ErrorResult,
   type Result,
@@ -129,3 +129,9 @@ expectType<Result<{ then(): never }>>(
     }
   }))
 );
+
+// Breaks with instance methods
+function instanceMethod(this: { foo: number }, param: number) {
+  return this.foo + param;
+}
+expectError(t(instanceMethod, 123));
