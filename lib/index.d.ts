@@ -125,10 +125,10 @@ interface ResultConstructor {
       ReturnType<F> extends never
       ? ErrorResult
       : // promise never
-        ReturnType<F> extends PromiseLike<never>
+        ReturnType<F> extends Promise<never>
         ? Promise<ErrorResult>
-        : // Unwraps any promise-like return type
-          ReturnType<F> extends PromiseLike<infer U>
+        : // Unwraps any promise return type
+          ReturnType<F> extends Promise<infer U>
           ? Promise<Result<Awaited<U>>>
           : // normal return type
             Result<ReturnType<F>>;

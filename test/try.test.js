@@ -134,6 +134,40 @@ describe('Result.try(Promise)', () => {
     assert.strictEqual(result.ok, false);
     assert.strictEqual(typeof result.error, 'function');
   });
+
+  test('() => PromiseLike', () => {
+    const thenable = {
+      // biome-ignore lint/suspicious/noThenProperty: This is a test
+      then() {
+        return true;
+      }
+    };
+
+    const result = Result.try(() => {
+      return thenable;
+    });
+
+    // Should not execute then-ables
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(result.value, thenable);
+  });
+
+  test('() => throw PromiseLike', () => {
+    const thenable = {
+      // biome-ignore lint/suspicious/noThenProperty: This is a test
+      then() {
+        throw new Error('Test error');
+      }
+    };
+
+    const result = Result.try(() => {
+      return thenable;
+    });
+
+    // Should not execute then-ables
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(result.value, thenable);
+  });
 });
 
 describe('Result.try(Literal)', () => {

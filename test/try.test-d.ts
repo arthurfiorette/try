@@ -112,3 +112,21 @@ t(() => Promise.resolve('chain')).then((res) => {
 t(Promise.resolve('chain')).then((res) => {
   expectType<Result<string>>(res);
 });
+
+// Does not unwraps thenables
+expectType<Result<{ then(): boolean }>>(
+  t(() => ({
+    // biome-ignore lint/suspicious/noThenProperty: This is a test
+    then() {
+      return true;
+    }
+  }))
+);
+expectType<Result<{ then(): boolean }>>(
+  t(() => ({
+    // biome-ignore lint/suspicious/noThenProperty: This is a test
+    then() {
+      throw new Error('error');
+    }
+  }))
+);
