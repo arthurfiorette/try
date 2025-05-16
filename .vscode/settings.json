@@ -1,6 +1,0 @@
-{
-  "biome.enabled": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  }
-}
