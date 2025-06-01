@@ -53,6 +53,8 @@ If you'd like to suggest changes or improvements to the behavior or API, please 
 <br />
 
 ```ts
+import { Result, ok, error, t } from 'try';
+
 // Synchronous function call
 const [ok1, err1, val1] = t(JSON.parse, '{"foo":"bar"}');
 
