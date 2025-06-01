@@ -28,17 +28,15 @@ const [ok, error, value] = t(JSON.parse, '{"foo": "bar"}');
 const [ok, error, value] = await t(axios.get('https://arthur.place'));
 ```
 
+<br />
+
 This package is a minimal and precise reference implementation of the [`Result` class](https://github.com/arthurfiorette/proposal-try-operator#result-class) as described in the [Try Operator](https://github.com/arthurfiorette/proposal-try-operator) proposal for JavaScript.
 
-It aims to provide a lightweight and fast runtime utility that reflects exactly how the proposed `try` operator would behave — and **will not evolve independently of the proposal**.
+It aims to provide a lightweight and fast runtime utility that reflects exactly how the proposed `try` operator would behave, and **will not evolve independently of the proposal**.
 
 If you'd like to suggest changes or improvements to the behavior or API, please [open an issue on the proposal repository](https://github.com/arthurfiorette/proposal-try-operator/issues/new/choose). Once discussed and approved there, changes will be reflected in this package.
 
-<details>
-
-<summary>
-  <h3>Table of Contents</h3>
-</summary>
+<br />
 
 - [Why This Exists](#why-this-exists)
 - [Usage](#usage)
@@ -49,10 +47,41 @@ If you'd like to suggest changes or improvements to the behavior or API, please 
 - [No `Result.bind`](#no-resultbind)
 - [Creating Results Manually](#creating-results-manually)
 - [Learn More](#learn-more)
-- [License](#license)
 - [Acknowledgements](#acknowledgements)
+- [License](#license)
 
-</details>
+<br />
+
+```ts
+// Synchronous function call
+const [ok1, err1, val1] = t(JSON.parse, '{"foo":"bar"}');
+
+// Arrow function context
+const [ok2, err2, val2] = t(() => decoder.decode(buffer));
+
+// Promise call
+const [ok3, err3, val3] = await t(fetch, 'https://api.example.com');
+
+// Promise-safe call (safely catches both sync and async errors)
+const [ok4, err4, val4] = await t(() => readFile('./config.json'));
+
+// Argument passthrough
+const [ok5, err5, val5] = t((a, b) => a + b, 2, 3);
+
+// Keep full result object for readability
+const result = await t(fetch, 'https://arthur.place');
+if (result.ok) console.log(await result.value.text());
+
+// Manual success and error results
+const success = ok(42);
+const failure = error(new Error('nope'));
+
+// Manual Result creation via class
+const successObj = Result.ok('done');
+const failureObj = Result.error('fail');
+```
+
+<br />
 
 ## Why This Exists
 
@@ -60,7 +89,7 @@ JavaScript error handling can be verbose and inconsistent. The [Try Operator pro
 
 While the proposal is still in the works, this package provides a way to experiment with the new pattern in a standardized way.
 
-This implementation provides a drop-in utility: `Result.try()` (or the shorter `t()`) to wrap expressions and handle errors in a clean, tuple-like form.
+This package provides a drop-in utility: `Result.try()` (or the shorter `t()`) to wrap expressions and handle errors in a clean, tuple-like form.
 
 ```ts
 const [ok, error, value] = t(JSON.parse, '{"foo":"bar"}');
@@ -71,6 +100,8 @@ if (ok) {
   console.error('Invalid JSON', error);
 }
 ```
+
+> You can destructure the result into `[ok, error, value]`, or access `.ok`, `.error`, and `.value` directly depending on your use case.
 
 <br />
 
@@ -93,7 +124,7 @@ if (ok) {
 ```
 
 > [!NOTE]  
->  This form—`Result.try(() => fn())`—is verbose compared to the proposal's future `try fn()` syntax. Always prefer to use the `t()` alias for cleaner code.
+>  `Result.try(() => fn())` is verbose compared to the proposal's future `try fn()` syntax. Always prefer to use the `t()` alias for cleaner code.
 
 <br />
 
@@ -102,7 +133,6 @@ if (ok) {
 To make code cleaner and more ergonomic while we wait for language-level syntax sugar, this package also exports `t`, a shortcut for `Result.try`.
 
 ```ts
-import { Result, t } from 'try';
 import { readFile } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 
@@ -123,11 +153,8 @@ function divide(a: number, b: number) {
   return a / b;
 }
 
-const [ok, error, value] = t(divide, 10, 2); // ok: true, value: 5
-const [ok, error, value] = t(divide, 10, 0); // still ok: true, value: Infinity
-
-// ⚠️ Type error: argument type mismatch
-const [ok, error, value] = t(divide, 'hello', 2); // 😅 still ok: true, value: NaN
+const [ok, error, value] = t(divide, 10, 2);
+// ok: true, value: 5
 ```
 
 <br />
@@ -136,13 +163,11 @@ const [ok, error, value] = t(divide, 'hello', 2); // 😅 still ok: true, value:
 
 While destructuring works well for simple use cases, it can lead to awkward variable naming and clutter when handling multiple `try` results. In these cases, **it's recommended to keep the full result object and access `.ok`, `.error`, and `.value` directly** for better clarity and readability.
 
-❌ Bad (hard to manage variable names, especially with many results):
+❌ Bad (managing variable names becomes cumbersome):
 
 ```ts
 // error handling omitted for brevity
-
 const [ok1, error1, value1] = Result.try(() => axios.get(...));
-
 const [ok2, error2, value2] = Result.try(() => value1.data.property);
 ```
 
@@ -150,10 +175,8 @@ const [ok2, error2, value2] = Result.try(() => value1.data.property);
 
 ```ts
 // error handling omitted for brevity
-
-const response = Result.try(() => axios.get(...));
-
-const data = Result.try(() => response.value.data.property);
+const response = await Result.try(fetch('https://arthur.place'));
+const data = await Result.try(() => response.value.text()));
 ```
 
 Using the result object directly avoids unnecessary boilerplate and naming inconsistencies, especially in nested or sequential operations. It's a cleaner, more scalable pattern that mirrors real-world error handling flows.
@@ -176,7 +199,7 @@ if (ok) {
 }
 ```
 
-The return value of `t()` is automatically `await`-able if the function returns a promise — no special handling needed.
+The return value of `t()` is automatically `await`-able if the function returns a promise, no extra handling required.
 
 <br />
 
@@ -197,12 +220,13 @@ You can also create `Result` objects directly:
 ```ts
 import { Result, ok, error } from 'try';
 
-const success = Result.ok(42);
-const failure = Result.error(new Error('Something went wrong'));
+// With full Result class
+const res1 = Result.ok('done');
+const res2 = Result.error('fail');
 
-// Shorthand:
-const success = ok(42);
-const failure = error('oops');
+// Shorthand
+const okRes = ok(42);
+const errRes = error('oops');
 ```
 
 This is useful when bridging non-try-based code or mocking results.
@@ -217,14 +241,14 @@ To learn about the underlying proposal, including syntax goals and motivation, v
 
 <br />
 
-## License
-
-Both the project and the proposal are licensed under the [MIT](./LICENSE) license.
-
-<br />
-
 ## Acknowledgements
 
 Many thanks to [Szymon Wygnański](https://finalclass.net) for transferring the `try` package name on NPM to this project. Versions below `1.0.0` served a different purpose, but with his permission, the project was repurposed to host an implementation of the proposal’s `Result` class.
+
+<br />
+
+## License
+
+Both the project and the proposal are licensed under the [MIT](./LICENSE) license.
 
 <br />
