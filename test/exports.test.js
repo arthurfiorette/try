@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 import { describe, test } from 'node:test';
-import { Result, error, ok, t } from '../lib/index.js';
+import { error, ok, Result, t } from '../lib/index.js';
 
 describe('export {}', () => {
   test('Result.ok === ok', () => {

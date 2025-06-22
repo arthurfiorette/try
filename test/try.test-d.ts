@@ -4,8 +4,8 @@ import {
   type ErrorResult,
   type Result,
   type ResultConstructor,
-  type ValueResult,
-  t
+  t,
+  type ValueResult
 } from '../lib/index.js';
 
 // Same function

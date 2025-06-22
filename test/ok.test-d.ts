@@ -1,5 +1,5 @@
 import { expectAssignable, expectNotType, expectType } from 'tsd';
-import { type ResultConstructor, type ValueResult, ok } from '../lib/index.js';
+import { ok, type ResultConstructor, type ValueResult } from '../lib/index.js';
 
 // Same function
 expectAssignable<ResultConstructor['ok']>(ok);
