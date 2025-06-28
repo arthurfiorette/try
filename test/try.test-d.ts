@@ -14,7 +14,14 @@ expectAssignable<ResultConstructor['try']>(t);
 // Keeps any when no type is provided
 expectType<Result<any>>(t(() => JSON.parse('{"foo": "bar"}')));
 expectType<Result<any>>(t(JSON.parse, '{"foo": "bar"}'));
+expectType<Result<any>>(t(JSON.parse('{"foo": "bar"}')));
+
+async function asyncFn(json: string) {
+  return JSON.parse(json);
+}
 expectType<Promise<Result<any>>>(t(async () => JSON.parse('{"foo": "bar"}')));
+expectType<Promise<Result<any>>>(t(async (args) => JSON.parse(args), '{"foo": "bar"}'));
+expectType<Promise<Result<any>>>(t(asyncFn, '{"foo": "bar"}'));
 
 // Supports promise overloads
 expectType<Promise<Result<string>>>(t(fs.promises.readFile('package.json', 'utf-8')));

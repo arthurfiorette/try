@@ -39,6 +39,23 @@ type ValueResult<V> = {
  */
 export type Result<V> = ErrorResult | ValueResult<V>;
 
+type WrapResult<P> =
+  // checks for any
+  0 extends 1 & P
+    ? // intentionally omit Promise<Result<P>> return type to simplify usage
+      Result<any>
+    : // checks for never
+      [P] extends [never]
+      ? ErrorResult
+      : // promise never
+        P extends Promise<never>
+        ? Promise<ErrorResult>
+        : // unwraps any promise return type
+          P extends Promise<infer U>
+          ? Promise<Result<Awaited<U>>>
+          : // normal return type
+            Result<P>;
+
 interface ResultConstructor {
   /**
    * Creates a successful `Result` with a value.
@@ -92,7 +109,7 @@ interface ResultConstructor {
    * @param promise A promise to wrap.
    * @returns A promise that resolves to a `Result`.
    */
-  try<P extends Promise<unknown>>(this: void, promise: P): Promise<Result<Awaited<P>>>;
+  try<P extends Promise<any>>(this: void, promise: P): WrapResult<P>;
 
   /**
    * Executes a function and wraps its return value in a `Result`.
@@ -118,20 +135,7 @@ interface ResultConstructor {
     this: void,
     fn: F,
     ...args: Parameters<F>
-  ): 0 extends 1 & ReturnType<F>
-    ? // Avoid any return type to create Promise<Result> | Result
-      Result<any>
-    : // checks for never
-      ReturnType<F> extends never
-      ? ErrorResult
-      : // promise never
-        ReturnType<F> extends Promise<never>
-        ? Promise<ErrorResult>
-        : // Unwraps any promise return type
-          ReturnType<F> extends Promise<infer U>
-          ? Promise<Result<Awaited<U>>>
-          : // normal return type
-            Result<ReturnType<F>>;
+  ): WrapResult<ReturnType<F>>;
 
   /**
    * An alias for {@linkcode Result.ok}.
