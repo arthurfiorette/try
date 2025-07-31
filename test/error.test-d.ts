@@ -1,5 +1,5 @@
 import { expectAssignable, expectType } from 'tsd';
-import { type ErrorResult, error, type ResultConstructor } from '../lib/index.js';
+import { type ErrorResult, error, Result, type ResultConstructor } from '../lib/index.js';
 
 // Same function
 expectAssignable<ResultConstructor['error']>(error);
@@ -20,3 +20,8 @@ declare const result: ErrorResult;
 expectType<false>(result.ok);
 expectType<unknown>(result.error);
 expectType<undefined>(result.value);
+
+// Ensures constructor falls back to ErrorResult type if params are incorrect
+// @ts-expect-error
+const res = new Result(false, new Error('Some Error'), 1);
+expectType<ErrorResult>(res);

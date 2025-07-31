@@ -58,6 +58,17 @@ type WrapResult<P> =
 
 interface ResultConstructor {
   /**
+   * Creates a failed `Result` with an error.
+   *
+   * @example
+   *
+   * ```ts
+   * new Result(false, new Error('Something went wrong'));
+   * ```
+   */
+  new (ok: false, error: unknown, value?: undefined | null): ErrorResult;
+
+  /**
    * Creates a successful `Result` with a value.
    *
    * @example
@@ -68,17 +79,6 @@ interface ResultConstructor {
    * ```
    */
   new <V>(ok: true, error: undefined | null, value: V): ValueResult<V>;
-
-  /**
-   * Creates a failed `Result` with an error.
-   *
-   * @example
-   *
-   * ```ts
-   * new Result(false, new Error('Something went wrong'));
-   * ```
-   */
-  new (ok: false, error: unknown, value?: undefined | null): ErrorResult;
 
   /**
    * Creates a successful `Result`.
