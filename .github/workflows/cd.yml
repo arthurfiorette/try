@@ -42,7 +42,7 @@ jobs:
         run: pnpm test
 
       - name: Update NPM
-        run: pnpm i -g npm@latest
+        run: npm i -g npm@latest
 
       - name: Publish to NPM
         run: pnpm publish --no-git-checks
