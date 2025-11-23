@@ -41,6 +41,9 @@ jobs:
       - name: Test
         run: pnpm test
 
+      - name: Update NPM
+        run: pnpm i -g npm@latest
+
       - name: Publish to NPM
         run: pnpm publish --no-git-checks
         env:
