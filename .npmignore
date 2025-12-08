@@ -4,3 +4,5 @@
 
 !lib/index.js
 !lib/index.d.ts
+!dist/index.cjs
+!dist/index.cjs.map
