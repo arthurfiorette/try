@@ -41,6 +41,9 @@ jobs:
       - name: Test
         run: pnpm test
 
+      - name: Build CJS bundle
+        run: pnpm build-cjs
+
       - name: Update NPM
         run: npm i -g npm@latest
 
