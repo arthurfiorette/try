@@ -1,4 +1,6 @@
 name: Code CI
+permissions:
+  contents: read
 
 on:
   push:
